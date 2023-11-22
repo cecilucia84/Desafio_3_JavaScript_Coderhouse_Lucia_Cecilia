@@ -1,12 +1,3 @@
-class tienda_tortas {
-    constructor(id, titulo, precio, imagen) {
-        this.id = id;
-        this.titulo = titulo;
-        this.precio = precio;
-        this.imagen = imagen;
-    }
-}
-
 const arrayTortas = [
     new tienda_tortas(1, 'Chocotorta', 3500, 'recursos/chocotorta.jpg'),
     new tienda_tortas(2, 'Torta Cono', 4000, 'recursos/Romi con torta cono.webp'),
