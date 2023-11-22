@@ -1,4 +1,4 @@
-const productosEnCarrito = JSON.parse(localStorage.getItem("productosencarrito"));
+const productosEnCarrito = JSON.parse(localStorage.getItem("productos_en_carrito"));
 
 const contenedorCarritoVacio = document.querySelector("#carrito_vacio");
 const contenedorCarritoProductos = document.querySelector("#carrito_productos");
