@@ -50,7 +50,7 @@ function cargarProductos() {
     });
 
     // Actualiza los botones de agregar después de cargar los productos
-    actualizarBotonesAgregar();
+actualizarBotonesAgregar();
 }
 
 function actualizarBotonesAgregar() {
