@@ -71,15 +71,15 @@ function actualizarBotonesEliminar() {
     });
 }
 
-
 function actualizarTotal() {
-    let total = 0;
-    CakeEnCarrito.forEach((producto) => {
-        total += producto.PRECIO * producto.cantidad;
-    });
-    contenedorTotal.textContent = "$" + total;
+    if (contenedorTotal) {
+        let total = 0;
+        CakeEnCarrito.forEach((producto) => {
+            total += producto.PRECIO * producto.cantidad;
+        });
+        contenedorTotal.textContent = "$" + total;
+    }
 }
-
 actualizarTotal();
 
 botonVaciar.addEventListener("click", () => {
@@ -87,8 +87,10 @@ botonVaciar.addEventListener("click", () => {
     resetearCarrito();
 });
 
+document.addEventListener("DOMContentLoaded", function() {
 botonComprar.addEventListener("click", comprarCarrito);
 
+});
 function comprarCarrito() {
     localStorage.setItem("productos_en_carrito", JSON.stringify([]));
 
