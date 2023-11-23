@@ -97,5 +97,5 @@ actualizarTotal();
 
 function actualizarCarrito() {
     // Función para actualizar el carrito después de cambios
-
+    const contenedorCarritoProductos = document.querySelector("#carrito_productos");
 }
