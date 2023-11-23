@@ -1,45 +1,49 @@
-const productosEnCarrito = JSON.parse(localStorage.getItem("productos_en_carrito"));
+const CakeEnCarrito = JSON.parse(localStorage.getItem("productos_en_carrito")) || [];
 
 const contenedorCarritoVacio = document.querySelector("#carrito_vacio");
 const contenedorCarritoProductos = document.querySelector("#carrito_productos");
 const contenedorCarritoAcciones = document.querySelector("#carrito_acciones");
 const contenedorCarritoComprado = document.querySelector("#carrito_comprado");
-let botonesEliminar = document.querySelectorAll(".carrito_producto_eliminar");
 const botonVaciar = document.querySelector("#carrito_acciones_vaciar");
 const contenedorTotal = document.querySelector("#total");
 const botonComprar = document.querySelector("#carrito_acciones_comprar");
 
-if (productosEnCarrito) {
+if (CakeEnCarrito.length > 0) {
     contenedorCarritoVacio.classList.add("disabled");
     contenedorCarritoProductos.classList.remove("disabled");
     contenedorCarritoAcciones.classList.remove("disabled");
     contenedorCarritoComprado.classList.add("disabled");
 
-    productosEnCarrito.forEach((producto) => {
+    contenedorCarritoProductos.innerHTML = "";
+
+    CakeEnCarrito.forEach((torta) => {
         const div = document.createElement("div");
         div.classList.add("carrito_producto");
         div.innerHTML = `
-            <img class="carrito_producto_imagen" src="${producto.imagen}" alt="">
+            <img class="carrito_producto_imagen" src="${torta.IMAGEN}" alt="">
             <div class="carrito_producto_titulo">
                 <small>Titulo</small>
-                <h3>${producto.titulo}</h3>
+                <h3>${torta.TITULO}</h3>
             </div>
             <div class="carrito_producto_cantidad">
                 <small>Cantidad</small>
-                <p>${producto.cantidad}</p>
+                <p>${torta.cantidad}</p>
             </div>
             <div class="carrito_producto_precio">
                 <small>Precio</small>
-                <p>$${producto.precio}</p>
+                <p>$${torta.PRECIO}</p>
             </div>
             <div class="carrito_producto_subtotal">
                 <small>Subtotal</small>
-                <p>$${producto.precio * producto.cantidad}</p>
+                <p>$${torta.PRECIO * torta.cantidad}</p>
             </div>
-            <button class="carrito_producto_eliminar" id=${producto.id}><i class="bi bi-trash3-fill"></i></button>
+            <button class="carrito_producto_eliminar" id=${torta.ID}><i class="bi bi-trash3-fill"></i></button>
         </div>`;
-        contenedorCarritoProductos.append(div);
+        contenedorCarritoProductos.appendChild(div);
     });
+
+    actualizarBotonesEliminar();
+    actualizarTotal();
 } else {
     contenedorCarritoVacio.classList.remove("disabled");
     contenedorCarritoProductos.classList.add("disabled");
@@ -57,32 +61,30 @@ function actualizarBotonesEliminar() {
 
 function eliminarDelCarrito(e) {
     const idBoton = e.currentTarget.id;
-    const index = productosEnCarrito.findIndex((producto) => producto.id === idBoton);
+    const index = CakeEnCarrito.findIndex((torta) => torta.ID === idBoton);
 
-    productosEnCarrito.splice(index, 1);
-    cargarProductos();
-
-    localStorage.setItem("productos_en_carrito", JSON.stringify(productosEnCarrito));
+    if (index !== -1) {
+        CakeEnCarrito.splice(index, 1);
+        localStorage.setItem("productos_en_carrito", JSON.stringify(CakeEnCarrito));
+        actualizarCarrito();
+    }
 }
 
-botonVaciar.addEventListener("click", vaciarCarrito);
-
 function vaciarCarrito() {
-    productosEnCarrito.length = 0;
-    localStorage.setItem("productos_en_carrito", JSON.stringify(productosEnCarrito));
-    cargarProductos();
+    CakeEnCarrito.length = 0;
+    localStorage.setItem("productos_en_carrito", JSON.stringify(CakeEnCarrito));
+    actualizarCarrito();
 }
 
 function actualizarTotal() {
-    const totalCalculado = productosEnCarrito.reduce((acc, producto) => acc + producto.precio * producto.cantidad, 0);
+    const totalCalculado = CakeEnCarrito.reduce((acc, torta) => acc + torta.PRECIO * torta.cantidad, 0);
     contenedorTotal.innerText = `$${totalCalculado}`;
 }
 
-botonComprar.addEventListener("click", comprarCarrito);
-
 function comprarCarrito() {
-    productosEnCarrito.length = 0;
-    localStorage.setItem("productos_en_carrito", JSON.stringify(productosEnCarrito));
+    CakeEnCarrito.length = 0;
+    localStorage.setItem("productos_en_carrito", JSON.stringify(CakeEnCarrito));
+    actualizarCarrito();
 
     contenedorCarritoVacio.classList.add("disabled");
     contenedorCarritoProductos.classList.add("disabled");
@@ -92,3 +94,8 @@ function comprarCarrito() {
 
 // Llamamos a la función para actualizar el total al cargar la página
 actualizarTotal();
+
+function actualizarCarrito() {
+    // Función para actualizar el carrito después de cambios
+
+}
