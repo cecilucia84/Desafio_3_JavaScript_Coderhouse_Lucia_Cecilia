@@ -8,7 +8,7 @@ const botonVaciar = document.querySelector("#carrito_acciones_vaciar");
 const contenedorTotal = document.querySelector("#total");
 const botonComprar = document.querySelector("#carrito_acciones_comprar");
 
-// Función para resetear el carrito
+
 function resetearCarrito() {
   
     localStorage.clear();
@@ -71,7 +71,7 @@ function actualizarBotonesEliminar() {
     });
 }
 
-// Esta función suma el subtotal de cada producto y lo muestra en el contenedor total
+
 function actualizarTotal() {
     let total = 0;
     CakeEnCarrito.forEach((producto) => {
@@ -83,7 +83,7 @@ function actualizarTotal() {
 actualizarTotal();
 
 botonVaciar.addEventListener("click", () => {
-   //Se vacia el localStorage y se resetea el carrito
+ 
     resetearCarrito();
 });
 
