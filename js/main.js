@@ -49,7 +49,7 @@ function cargarProductos() {
         containerTortas.append(div);
     });
 
-    // Actualiza los botones de agregar después de cargar los productos
+
 actualizarBotonesAgregar();
 }
 
@@ -72,10 +72,9 @@ function agregarAlCarrito(event) {
         const productoConCantidad = { ...productoAgregado, cantidad };
         productosEnCarrito.push(productoConCantidad);
         console.log("Producto agregado al carrito:", productoConCantidad);
-        // Actualiza el numerito al agregar un producto al carrito
+    
         actualizarNumerito();
         
-        // Actualiza el localStorage después de agregar productos al carrito
         localStorage.setItem("productos_en_carrito", JSON.stringify(productosEnCarrito));
     } else {
         console.error("No se pudo agregar el producto al carrito.");

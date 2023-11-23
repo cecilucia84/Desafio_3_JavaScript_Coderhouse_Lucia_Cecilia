@@ -8,6 +8,19 @@ const botonVaciar = document.querySelector("#carrito_acciones_vaciar");
 const contenedorTotal = document.querySelector("#total");
 const botonComprar = document.querySelector("#carrito_acciones_comprar");
 
+// Función para resetear el carrito
+function resetearCarrito() {
+  
+    localStorage.clear();
+
+
+    contenedorCarritoProductos.classList.add("disabled");
+    contenedorCarritoAcciones.classList.add("disabled");
+    contenedorTotal.classList.add("disabled"); 
+
+    contenedorCarritoVacio.classList.remove("disabled");
+}
+
 if (CakeEnCarrito.length > 0) {
     contenedorCarritoVacio.classList.add("disabled");
     contenedorCarritoProductos.classList.remove("disabled");
@@ -45,18 +58,14 @@ if (CakeEnCarrito.length > 0) {
     actualizarBotonesEliminar();
 }
 
-// Esta función agrega un evento click a cada botón de eliminar
 function actualizarBotonesEliminar() {
     const botonesEliminar = document.querySelectorAll(".carrito_producto_eliminar");
     botonesEliminar.forEach((boton) => {
         boton.addEventListener("click", (e) => {
-            // Obtenemos el id del producto a eliminar
-            const id = e.currentTarget.id; // Usamos currentTarget en lugar de target para obtener el id del botón y no del icono
-            // Filtramos el array de productos para quedarnos con los que no tienen ese id
+
+            const id = e.currentTarget.id; 
             const nuevosProductos = CakeEnCarrito.filter((producto) => producto.ID != id);
-            // Actualizamos el localStorage con el nuevo array
             localStorage.setItem("productos_en_carrito", JSON.stringify(nuevosProductos));
-            // Recargamos la página para mostrar los cambios
             location.reload();
         });
     });
@@ -71,23 +80,20 @@ function actualizarTotal() {
     contenedorTotal.textContent = "$" + total;
 }
 
-// Llamamos a la función actualizarTotal al cargar la página
 actualizarTotal();
 
-// Agregamos un evento click al botón vaciar
 botonVaciar.addEventListener("click", () => {
-    // Vaciamos el localStorage
-    localStorage.clear();
-    // Ocultamos los contenedores de productos, acciones y total
-    contenedorCarritoProductos.classList.add("disabled");
-    contenedorCarritoAcciones.classList.add("disabled");
-    contenedorTotal.classList.add("disabled"); // Añadimos esta línea para ocultar el contenedor total al vaciar
-    // Mostramos el contenedor de carrito vacío
-    contenedorCarritoVacio.classList.remove("disabled");
+   //Se vacia el localStorage y se resetea el carrito
+    resetearCarrito();
 });
 
-botonComprar.addEventListener("click", () => {
-    contenedorCarritoVacio.classList.add("disabled");
+botonComprar.addEventListener("click", comprarCarrito);
+
+function comprarCarrito() {
+    localStorage.setItem("productos_en_carrito", JSON.stringify([]));
+
     contenedorCarritoProductos.classList.add("disabled");
     contenedorCarritoAcciones.classList.add("disabled");
-    contenedorCarritoComprado.classList.remove("disabled");});
+    contenedorTotal.classList.add("disabled"); 
+    contenedorCarritoComprado.classList.remove("disabled");
+}
