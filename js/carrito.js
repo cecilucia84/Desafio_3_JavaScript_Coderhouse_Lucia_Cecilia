@@ -43,59 +43,51 @@ if (CakeEnCarrito.length > 0) {
     });
 
     actualizarBotonesEliminar();
-    actualizarTotal();
-} else {
-    contenedorCarritoVacio.classList.remove("disabled");
-    contenedorCarritoProductos.classList.add("disabled");
-    contenedorCarritoAcciones.classList.add("disabled");
-    contenedorCarritoComprado.classList.add("disabled");
 }
 
+// Esta función agrega un evento click a cada botón de eliminar
 function actualizarBotonesEliminar() {
     const botonesEliminar = document.querySelectorAll(".carrito_producto_eliminar");
-
     botonesEliminar.forEach((boton) => {
-        boton.addEventListener("click", eliminarDelCarrito);
+        boton.addEventListener("click", (e) => {
+            // Obtenemos el id del producto a eliminar
+            const id = e.currentTarget.id; // Usamos currentTarget en lugar de target para obtener el id del botón y no del icono
+            // Filtramos el array de productos para quedarnos con los que no tienen ese id
+            const nuevosProductos = CakeEnCarrito.filter((producto) => producto.ID != id);
+            // Actualizamos el localStorage con el nuevo array
+            localStorage.setItem("productos_en_carrito", JSON.stringify(nuevosProductos));
+            // Recargamos la página para mostrar los cambios
+            location.reload();
+        });
     });
 }
 
-function eliminarDelCarrito(e) {
-    const idBoton = e.currentTarget.id;
-    const index = CakeEnCarrito.findIndex((torta) => torta.ID === idBoton);
-
-    if (index !== -1) {
-        CakeEnCarrito.splice(index, 1);
-        localStorage.setItem("productos_en_carrito", JSON.stringify(CakeEnCarrito));
-        actualizarCarrito();
-    }
-}
-
-function vaciarCarrito() {
-    CakeEnCarrito.length = 0;
-    localStorage.setItem("productos_en_carrito", JSON.stringify(CakeEnCarrito));
-    actualizarCarrito();
-}
-
+// Esta función suma el subtotal de cada producto y lo muestra en el contenedor total
 function actualizarTotal() {
-    const totalCalculado = CakeEnCarrito.reduce((acc, torta) => acc + torta.PRECIO * torta.cantidad, 0);
-    contenedorTotal.innerText = `$${totalCalculado}`;
+    let total = 0;
+    CakeEnCarrito.forEach((producto) => {
+        total += producto.PRECIO * producto.cantidad;
+    });
+    contenedorTotal.textContent = "$" + total;
 }
 
-function comprarCarrito() {
-    CakeEnCarrito.length = 0;
-    localStorage.setItem("productos_en_carrito", JSON.stringify(CakeEnCarrito));
-    actualizarCarrito();
+// Llamamos a la función actualizarTotal al cargar la página
+actualizarTotal();
 
+// Agregamos un evento click al botón vaciar
+botonVaciar.addEventListener("click", () => {
+    // Vaciamos el localStorage
+    localStorage.clear();
+    // Ocultamos los contenedores de productos, acciones y total
+    contenedorCarritoProductos.classList.add("disabled");
+    contenedorCarritoAcciones.classList.add("disabled");
+    contenedorTotal.classList.add("disabled"); // Añadimos esta línea para ocultar el contenedor total al vaciar
+    // Mostramos el contenedor de carrito vacío
+    contenedorCarritoVacio.classList.remove("disabled");
+});
+
+botonComprar.addEventListener("click", () => {
     contenedorCarritoVacio.classList.add("disabled");
     contenedorCarritoProductos.classList.add("disabled");
     contenedorCarritoAcciones.classList.add("disabled");
-    contenedorCarritoComprado.classList.remove("disabled");
-}
-
-// Llamamos a la función para actualizar el total al cargar la página
-actualizarTotal();
-
-function actualizarCarrito() {
-    // Función para actualizar el carrito después de cambios
-    const contenedorCarritoProductos = document.querySelector("#carrito_productos");
-}
+    contenedorCarritoComprado.classList.remove("disabled");});

@@ -8,12 +8,12 @@ class TiendaTortas {
 }
 
 const arrayTortas = [
-    new TiendaTortas(1, 'Chocotorta', 3500, './recursos/chocotorta.jpg'),
-    new TiendaTortas(2, 'Torta Cono', 4000, './recursos/Romi con torta cono.webp'),
-    new TiendaTortas(3, 'Princess Cake', 4500, './recursos/Romi con torta princesa.jpg'),
-    new TiendaTortas(4, 'Donuts Cake', 4500, './recursos/Torta Donuts.webp'),
-    new TiendaTortas(5, 'Letter Cake', 4000, './recursos/Torta Letra.webp'),
-    new TiendaTortas(6, 'Ball Cake', 4500, './recursos/Torta pelotas de colores.webp'),
+    new TiendaTortas(1, 'Chocotorta', 3500, '../recursos/chocotorta.jpg'),
+    new TiendaTortas(2, 'Torta Cono', 4000, '../recursos/Romi con torta cono.webp'),
+    new TiendaTortas(3, 'Princess Cake', 4500, '../recursos/Romi con torta princesa.jpg'),
+    new TiendaTortas(4, 'Donuts Cake', 4500, '../recursos/Torta Donuts.webp'),
+    new TiendaTortas(5, 'Letter Cake', 4000, '../recursos/Torta Letra.webp'),
+    new TiendaTortas(6, 'Ball Cake', 4500, '../recursos/Torta pelotas de colores.webp'),
 ];
 
 const containerTortas = document.querySelector("#container-tortas");
