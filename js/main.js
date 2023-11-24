@@ -84,7 +84,7 @@ function agregarAlCarrito(event) {
 function actualizarNumerito() {
     const numerito = document.getElementById("numerito");
     
-    let totalCantidad = productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0);
+    let totalCantidad = productosEnCarrito.reduce((acc, torta) => acc + torta.cantidad, 0);
     numerito.innerText = totalCantidad;
 }
 

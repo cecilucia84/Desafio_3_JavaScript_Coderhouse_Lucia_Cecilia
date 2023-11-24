@@ -74,8 +74,8 @@ function actualizarBotonesEliminar() {
 function actualizarTotal() {
     if (contenedorTotal) {
         let total = 0;
-        CakeEnCarrito.forEach((producto) => {
-            total += producto.PRECIO * producto.cantidad;
+        CakeEnCarrito.forEach((torta) => {
+            total += torta.PRECIO * torta.cantidad;
         });
         contenedorTotal.textContent = "$" + total;
     }
